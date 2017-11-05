@@ -1,0 +1,239 @@
+<html>
+<head>
+<title>Calculator</title>
+<style>
+#container{
+  position: relative;
+  height:300px;
+  width:300px;
+  margin: auto;
+
+}
+input[type=button]{
+width:70px;
+height:70px;
+font-weight: bold;
+font-size: 35px;
+background-color: lightGray;
+border-radius: 80%;
+border: none;
+box-shadow:5px 3px 4px grey;
+}
+input[type=button]:hover{
+  background-color:grey;
+  cursor: pointer;
+}
+input[type=button]:active{
+  box-shadow: 0 5px #666;
+  transform: translateX(2px);
+}
+#bar{
+  font-weight: bold;
+  font-size: 35px;
+  border-radius: 10px;
+  background-color: #f2eb65;
+  width:290px;
+  height:70px;
+  user-select: none;
+}
+.operations:hover{
+  background-color: #35dd25;
+  cursor:pointer;
+}
+.sci{
+display: none;
+}
+body{
+  background-size: cover;
+}
+</style>
+<body background="bg1.jpg" onkeypress="handle(event)">
+  <div id="container"><br><br><br>
+    <h1 style="color:#cccc08 ;text-align:center">Scientific Calculator</h1><hr><br>
+  <form name="calculator">
+  <input type="text" id="bar" name="answer"/>
+  <br><br>
+  <input type="button" class="operations"  style="background-color:#10e850;width:70px;" value="<-" onclick="backspace()">
+  <input type="button" class="operations"  style="background-color:#10e850;width:70px;" value="C" onclick="calculator.answer.value=''">
+  <input type="button" value="SCI"style="background-color:#10e850; font-size:30px" onclick="disp()">
+  <input type="button" value="%"style="background-color:#10e850;" onclick="mod(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="x!" style="background-color:#10e850;font-size:25px;" onclick="fact(calculator.answer.value)">
+  <input type="button" class ="sci" value="x^2" style="background-color:#10e850;font-size:25px;" onclick="sq(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="x^3" style="background-color:#10e850;font-size:25px;" onclick="cc(eval(calculator.answer.value))">
+  <br>
+  <input type="button" value="1" onclick="check('1')" >
+  <input type="button" value="2" onclick="check('2')" >
+  <input type="button" value="3" onclick="check('3')">
+  <input type="button" style="background-color:#10e850;" value="+" onclick="operand('+')">
+  <input type="button" class ="sci" value="round" style="background-color:#10e850;font-size:20px;" onclick="round(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="&radic;" style="background-color:#10e850;font-size:25px;" onclick="root(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="abs" style="background-color:#10e850;font-size:25px;" onclick="abso(eval(calculator.answer.value))">
+  <br>
+  <input type="button" value="4" onclick="check('4')">
+  <input type="button" value="5" onclick="check('5')">
+  <input type="button" value="6" onclick="check('6')">
+  <input type="button" style="background-color:#10e850;" value="-" onclick="operand('-')">
+  <input type="button" class ="sci" value="sin" style="background-color:#10e850;font-size:25px;" onclick="sinn(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="cos" style="background-color:#10e850;font-size:25px;" onclick="coss(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="tan" style="background-color:#10e850;font-size:25px;" onclick="tann(eval(calculator.answer.value))">
+  <br>
+  <input type="button" value="7" onclick="check('7')">
+  <input type="button" value="8" onclick="check('8')">
+  <input type="button" value="9" onclick="check('9')">
+  <input type="button" style="background-color:#10e850;" value="x" onclick="operand('*')">
+  <input type="button" class ="sci" value="e" style="background-color:#10e850;font-size:25px;" onclick="e(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="pi" style="background-color:#10e850;font-size:25px;" onclick="pi(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="log2" style="background-color:#10e850;font-size:20px;" onclick="log2(eval(calculator.answer.value))">
+  <br>
+    <input type="button" style="background-color:#10e850;" value="." onclick="operand('.')">
+  <input type="button"  value="0" onclick="check('0')">
+  <input type="button"  style="background-color:#10e850;" value="/" onclick="operand('/')">
+  <input type="button" style="background-color:#10e850;" value="=" onclick="calc(calculator.answer.value)">
+  <input type="button" class="sci" value="log10" style="background-color:#10e850; font-size:20px;" onclick="log10(eval(calculator.answer.value))">
+  <input type="button" class ="sci" value="ln" style="background-color:#10e850;font-size:25px;" onclick="ln(eval(calculator.answer.value))">
+  <input type="button" class="sci" value="Rnd" style="background-color:#10e850; font-size:25px;" onclick="rnd(eval(calculator.answer.value))">
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<marquee><h2 style="font-style:italic;">Designed by Humaid Kidwai(16103031)</h2></marquee>
+<script>
+var f=0;
+var ff=0;
+var fff=0;
+function mod(ans){
+  calculator.answer.value=(ans/100);
+    f=1;
+}
+function sq(ans){
+  calculator.answer.value=Math.pow(ans,2);
+    f=1;
+}
+function cc(ans){
+  calculator.answer.value=Math.pow(ans,3);
+    f=1;
+}
+function round(ans){
+  calculator.answer.value=Math.round(ans);
+    f=1;
+}
+function root(ans){
+  calculator.answer.value=Math.sqrt(ans);
+    f=1;
+}
+function abso(ans){
+  calculator.answer.value=Math.abs(ans);
+    f=1;
+}
+function sinn(ans){
+  calculator.answer.value=Math.sin(ans*Math.PI/180);
+  f=1;
+}
+function coss(ans){
+  calculator.answer.value=Math.cos(ans*Math.PI/180);
+    f=1;
+}
+function tann(ans){
+  calculator.answer.value=Math.tan(ans * Math.PI/180);
+    f=1;
+}
+function e(ans){
+  var e=Math.E;
+  calculator.answer.value+=e;
+    f=1;
+}
+function pi(ans){
+  calculator.answer.value+=Math.PI;
+    f=1;
+}
+function log2(ans){
+  calculator.answer.value=Math.log2(ans);
+    f=1;
+}
+function log10(ans){
+  calculator.answer.value=Math.log10(ans);
+    f=1;
+}
+function ln(ans){
+  calculator.answer.value=Math.log(ans);
+    f=1;
+}
+function rnd(){
+  calculator.answer.value=Math.random();
+    f=1;
+}
+function disp(){
+          if(ff==0){
+          var x=document.getElementsByClassName('sci');
+          var i=0;
+        document.getElementById('container').style.width="600px";
+        for(i=0;i<x.length;i++){
+          x[i].style.display="inline";
+        }
+        document.getElementById('bar').style.width="500px";
+        ff=1;
+        }
+else {
+  var x=document.getElementsByClassName('sci');
+  var i=0;
+document.getElementById('container').style.width="600px";
+for(i=0;i<x.length;i++){
+  x[i].style.display="none";
+}
+  document.getElementById('container').style.width="300px";
+  document.getElementById('bar').style.width="290px";
+  ff=0;
+}
+}
+function backspace(){
+var l=calculator.answer.value.length;
+calculator.answer.value=calculator.answer.value.substring(0,l-1);
+}
+function fact(x){
+  var fact=1
+  for(var i=1;i<=x;i++){
+    fact=fact*i;
+  }
+  calculator.answer.value=fact;
+}
+function calc(x){
+
+  if(eval(calculator.answer.value)=="Infinity"){
+    calculator.answer.value="error:divided by zero";
+    f=1; fff=0;
+  }
+  else {
+    calculator.answer.value=eval(x);
+  f=1; fff=0;}
+}
+function check(k)
+{
+  if(f==1){
+    calculator.answer.value=k;
+  fff=0;
+    f=0;
+  }
+  else{
+    fff=0;
+    calculator.answer.value+=k;
+  }
+}
+function operand(kk){
+  if(fff==1){
+  f=0;
+}
+else {
+calculator.answer.value+=kk;
+fff=1;
+f=0;
+}
+}
+function handle(ex){
+  if(ex.keyCode===13){
+    ex.preventDefault();
+    calc(calculator.answer.value);
+      f=1;
+  }
+}
+</script>
+</body>
+</head>
+</html>
